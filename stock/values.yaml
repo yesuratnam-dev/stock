@@ -1,0 +1,10 @@
+cluster:
+  name: my-cluster
+
+grafana-agent:
+  agent:
+    extraPorts:
+      - name: "zipkin"
+        port: 9411
+        targetPort: 9411
+        protocol: "TCP"

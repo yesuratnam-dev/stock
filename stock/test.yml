@@ -1,0 +1,37 @@
+helm repo add grafana https://grafana.github.io/helm-charts &&
+  helm repo update &&
+  helm upgrade --install grafana-k8s-monitoring grafana/k8s-monitoring \
+    --namespace "default" --create-namespace --values - <<EOF
+cluster:
+  name: nginx
+externalServices:
+  prometheus:
+    host: https://prometheus-prod-13-prod-us-east-0.grafana.net
+    basicAuth:
+      username: "1116768"
+      password: CLOUD_URL="https://ratnamy680.grafana.net"
+        CLOUD_HOSTED_METRICS_URL="https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom/push"
+        CLOUD_HOSTED_METRICS_ID="1116768" CLOUD_SCRAPE_INTERVAL="60s"
+        CLOUD_HOSTED_LOGS_URL="https://logs-prod-006.grafana.net/loki/api/v1/push"
+        CLOUD_HOSTED_LOGS_ID="657485"
+        CLOUD_RW_API_KEY="glc_eyJvIjoiOTExMDI1IiwibiI6InN0YWNrLTcwNDQ0Ny1pbnRlZ3JhdGlvbi1hY2VyIiwiayI6IkdDNURhUEcwWmU3UTZNNDN6Rjg0MWgwSSIsIm0iOnsiciI6InByb2QtdXMtZWFzdC0wIn19"
+  loki:
+    host: https://logs-prod-006.grafana.net
+    basicAuth:
+      username: "657485"
+      password: CLOUD_URL="https://ratnamy680.grafana.net"
+        CLOUD_HOSTED_METRICS_URL="https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom/push"
+        CLOUD_HOSTED_METRICS_ID="1116768" CLOUD_SCRAPE_INTERVAL="60s"
+        CLOUD_HOSTED_LOGS_URL="https://logs-prod-006.grafana.net/loki/api/v1/push"
+        CLOUD_HOSTED_LOGS_ID="657485"
+        CLOUD_RW_API_KEY="glc_eyJvIjoiOTExMDI1IiwibiI6InN0YWNrLTcwNDQ0Ny1pbnRlZ3JhdGlvbi1hY2VyIiwiayI6IkdDNURhUEcwWmU3UTZNNDN6Rjg0MWgwSSIsIm0iOnsiciI6InByb2QtdXMtZWFzdC0wIn19"
+opencost:
+  opencost:
+    exporter:
+      defaultClusterId: nginx
+    prometheus:
+      external:
+        url: https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom
+    prometheus-operator-crds:
+      enabled: false
+EOF
